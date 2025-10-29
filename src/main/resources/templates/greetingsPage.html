@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FaceLook</title>
+</head>
+
+<body>
+<h1>Добро пожаловать, <span th:text="${user.first_name}"></span></h1>
+
+<h2>Для начала, загрузите свою фотографию. Её будут видеть все пользователи.</h2>
+<form action="/profile/upload" method="post" enctype="multipart/form-data">
+    <label for="photo">Загрузить фото:</label>
+    <input type="file" id="photo" name="photo" accept="image/*" required>
+    <button type="submit">Загрузить</button>
+</form>
+
+
+</body>
+</html>

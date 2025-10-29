@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - FaceLook</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}" />
+</head>
+<body>
+
+<form action="/register" method="post">
+    <div class="form-header">FaceLook</div>
+    <div class="form-content">
+
+        <div class="form-row">
+            <div class="form-column">
+                <input id="first_name" name="first_name" placeholder="First name" required
+                       th:value="${first_name}">
+            </div>
+            <div class="form-column">
+                <input id="last_name" name="last_name" placeholder="Last name" required
+                       th:value="${last_name}">
+            </div>
+        </div>
+
+        <label>Birthday date</label>
+        <div class="birthday-selects">
+
+            <select id="day" name="birthday_date_day" required>
+                <option value="">Day</option>
+            </select>
+
+            <select id="month" name="birthday_date_month" required>
+                <option value="">Month</option>
+            </select>
+
+            <select id="year" name="birthday_date_year" required>
+                <option value="">Year</option>
+            </select>
+
+            <!-- Сохраняем данные для JS через data-атрибуты -->
+            <div id="birthday-data"
+                 th:attr="data-day=${birthday_date_day}, data-month=${birthday_date_month}, data-year=${birthday_date_year}"
+                 style="display:none;"></div>
+
+        </div>
+        <div th:if="${error_date}" style="color:red;">
+            <p th:text="${error_date}"></p>
+        </div>
+
+        <label>Gender (not required)</label>
+        <div class="gender-options">
+            <label class="gender-option">
+                <span>Female</span>
+                <input type="radio" name="gender" value="female" th:checked="${gender == 'female'}">
+            </label>
+            <label class="gender-option">
+                <span>Male</span>
+                <input type="radio" name="gender" value="male" th:checked="${gender == 'male'}">
+            </label>
+        </div>
+
+        <input type="email" id="email" name="email" placeholder="Email"
+               th:value="${email}">
+
+        <div th:if="${error_email}" style="color:red;">
+            <p th:text="${error_email}"></p>
+        </div>
+
+        <input type="password" id="password1" name="password1" placeholder="Password" required
+               th:value="${password1}">
+        <input type="password" id="password2" name="password2" placeholder="Confirm password" required
+               th:value="${password2}">
+
+        <div th:if="${error_password}" style="color:red;">
+            <p th:text="${error_password}"></p>
+        </div>
+
+
+        <button type="submit">Register</button>
+
+        <p class="login-link">
+            Already registered? <a th:href="@{/login}">Log In</a>
+        </p>
+    </div>
+</form>
+<div class="footer">
+    Product by Denis Akhmin
+</div>
+
+<script>
+    // Получаем выбранные значения из data-атрибутов
+    const data = document.getElementById('birthday-data');
+    const selectedDay = data.dataset.day;
+    const selectedMonth = data.dataset.month;
+    const selectedYear = data.dataset.year;
+
+    // Селекты
+    const daySelect = document.getElementById('day');
+    const monthSelect = document.getElementById('month');
+    const yearSelect = document.getElementById('year');
+
+    // --- Заполняем дни ---
+    for (let i = 1; i <= 31; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        daySelect.appendChild(option);
+    }
+
+    // --- Заполняем месяцы ---
+    const months = [
+        'January','February','March','April','May','June',
+        'July','August','September','October','November','December'
+    ];
+    months.forEach((m,index)=>{
+        const option = document.createElement('option');
+        option.value = index+1;
+        option.textContent = m;
+        monthSelect.appendChild(option);
+    });
+
+    // --- Заполняем годы (1900 по текущий) ---
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear; y >= 1900; y--) {
+        const option = document.createElement('option');
+        option.value = y;
+        option.textContent = y;
+        yearSelect.appendChild(option);
+    }
+
+    // --- Подставляем предыдущие значения ---
+    if (selectedDay) daySelect.value = selectedDay;
+    if (selectedMonth) monthSelect.value = selectedMonth;
+    if (selectedYear) yearSelect.value = selectedYear;
+</script>
+
+</body>
+</html>

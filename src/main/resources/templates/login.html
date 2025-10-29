@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/register.css}" />
+<head>
+    <meta charset="UTF-8">
+    <title>Log in - FaceLook</title>
+</head>
+<body>
+
+<!-- Форма логина -->
+<form action="/login" method="post">
+    <div class="form-header">FaceLook</div>
+    <div class="form-content">
+
+
+    <div>
+        <input type="email" id="email" name="email" placeholder="Введите email" required
+               th:value="${email}">
+    </div>
+    <div th:if="${error_email}" style="color:red;">
+        <p th:text="${error_email}"></p>
+    </div>
+
+    <div>
+        <input type="password" id="password" name="password" placeholder="Введите пароль" required>
+    </div>
+    <div th:if="${error_password}" style="color:red;">
+        <p th:text="${error_password}"></p>
+    </div>
+
+    <div>
+        <button type="submit">Войти</button>
+    </div>
+        <p>Create account <a th:href="@{/register}">Register</a></p>
+    </div>
+
+</form>
+<div class="footer">
+    Product by Denis Akhmin
+</div>
+</body>
+</html>
